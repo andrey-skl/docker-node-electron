@@ -1,4 +1,4 @@
-FROM node:8.2
+FROM node:9.5
 
 RUN apt-get update && \
   apt-get install -y xvfb x11-xkb-utils xfonts-100dpi xfonts-75dpi \
