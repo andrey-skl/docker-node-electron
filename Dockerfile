@@ -1,19 +1,51 @@
 FROM node:12.18.1
 
-RUN apt-get update && \
-  apt-get install -y xvfb x11-xkb-utils xfonts-100dpi xfonts-75dpi \
-  xfonts-scalable xfonts-cyrillic x11-apps clang libdbus-1-dev libgtk2.0-dev \
-  libnotify-dev libgnome-keyring-dev libgconf2-dev libasound2-dev libcap-dev \
-  libcups2-dev libxtst-dev libxss1 libnss3-dev gcc-multilib g++-multilib
+RUN apt-get update -y
 
-# Copied from https://hub.docker.com/r/electronuserland/electron-builder/dockerfile
-RUN curl -L https://yarnpkg.com/latest.tar.gz | tar xvz && mv yarn-* /yarn && \
-  apt-get update -y && apt-get install --no-install-recommends -y software-properties-common && \
-  add-apt-repository ppa:snappy-dev/tools && apt-get update -y && apt-get upgrade -y && \
-  apt-get install --no-install-recommends -y google-chrome-stable libsecret-1-0 locales xvfb git snapcraft qtbase5-dev xorriso bsdtar build-essential autoconf libssl-dev icnsutils libopenjp2-7 graphicsmagick lzip rpm yasm libcurl3 && \
-  curl -O http://mirrors.kernel.org/ubuntu/pool/universe/libi/libicns/libicns1_0.8.1-3.1_amd64.deb && dpkg --install libicns1_0.8.1-3.1_amd64.deb && unlink libicns1_0.8.1-3.1_amd64.deb && \
-  apt-get remove software-properties-common -y && \
-  apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
+RUN apt-get install -y xvfb
+
+# Chrome deps. See https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md
+RUN apt-get install -y ca-certificates \
+      fonts-liberation \
+      gconf-service \
+      libappindicator1 \
+      libasound2 \
+      libatk-bridge2.0-0 \
+      libatk1.0-0 \
+      libc6 \
+      libcairo2 \
+      libcups2 \
+      libdbus-1-3 \
+      libexpat1 \
+      libfontconfig1 \
+      libgbm1 \
+      libgcc1 \
+      libgconf-2-4 \
+      libgdk-pixbuf2.0-0 \
+      libglib2.0-0 \
+      libgtk-3-0 \
+      libnspr4 \
+      libnss3 \
+      libpango-1.0-0 \
+      libpangocairo-1.0-0 \
+      libstdc++6 \
+      libx11-6 \
+      libx11-xcb1 \
+      libxcb1 \
+      libxcomposite1 \
+      libxcursor1 \
+      libxdamage1 \
+      libxext6 \
+      libxfixes3 \
+      libxi6 \
+      libxrandr2 \
+      libxrender1 \
+      libxss1 \
+      libxtst6 \
+      lsb-release \
+      wget \
+      xdg-utils
 
 # Fixes "cannot run in wd" issue with some Lerna versions https://github.com/theia-ide/theia/issues/508
 RUN npm config set unsafe-perm true
