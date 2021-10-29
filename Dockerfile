@@ -1,4 +1,4 @@
-FROM node:12.18.1
+FROM node:16.13.0
 
 RUN apt-get update -y
 
@@ -46,6 +46,8 @@ RUN apt-get install -y ca-certificates \
       lsb-release \
       wget \
       xdg-utils
+
+RUN npm install -g npm@6
 
 # Fixes "cannot run in wd" issue with some Lerna versions https://github.com/theia-ide/theia/issues/508
 RUN npm config set unsafe-perm true
